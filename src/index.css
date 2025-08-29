@@ -49,3 +49,8 @@ body {
     cursor: pointer;
   }
 }
+
+.pageContainer {
+  width: 1400px;
+  margin: 0 auto 50px;
+}
