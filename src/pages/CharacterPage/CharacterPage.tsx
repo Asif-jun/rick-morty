@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react'
-import s from './CharacterPage.module.css'
+import { Link } from 'react-router-dom'
+import s from './CharacterPage.module.css' // только стили страницы CharacterPage
 import axios from 'axios'
 
+// Типы данных из API
 interface Character {
   id: number
   name: string
@@ -15,7 +17,7 @@ interface Info {
   prev: string | null
 }
 
-// Карточка одного персонажа
+// Компонент карточки для CharacterPage
 const CharacterCard = ({ character }: { character: Character }) => (
   <div className={s.character}>
     <div className={s.characterLink}>{character.name}</div>
@@ -33,7 +35,6 @@ export const CharacterPage = () => {
   })
   const [error, setError] = useState<string | null>(null)
 
-  // Функция для пагинации
   const fetchPage = (url: string | null) => {
     if (!url) return
     axios
@@ -46,7 +47,6 @@ export const CharacterPage = () => {
       .catch(() => setError('Ошибка загрузки данных'))
   }
 
-  // Функция для поиска
   const fetchData = (url: string) => {
     axios
       .get<{ results: Character[]; info: Info }>(url)
@@ -62,12 +62,10 @@ export const CharacterPage = () => {
       })
   }
 
-  // Загрузка первой страницы при монтировании
   useEffect(() => {
     fetchPage('https://rickandmortyapi.com/api/character')
   }, [])
 
-  // Обработчик поиска
   const searchHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.currentTarget.value
     fetchData(`https://rickandmortyapi.com/api/character?name=${value}`)
@@ -88,14 +86,18 @@ export const CharacterPage = () => {
 
       {!error && characters.length > 0 && (
         <>
-          {/* Список карточек персонажей */}
           <div className={s.characters}>
-            {characters.map(c => (
-              <CharacterCard key={c.id} character={c} />
+            {characters.map(character => (
+              <Link
+                key={character.id}
+                to={`/characters/${character.id}`} // ссылка на страницу Character.tsx
+                className={s.characterLink}
+              >
+                <CharacterCard character={character} />
+              </Link>
             ))}
           </div>
 
-          {/* Кнопки пагинации */}
           <div className={s.buttonContainer}>
             <button
               className='linkButton'
