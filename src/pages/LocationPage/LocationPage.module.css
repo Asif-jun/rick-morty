@@ -1,0 +1,51 @@
+/* LocationPage.module.css */
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin: 20px 0;
+  align-items: flex-start; /* карточки выравниваются слева */
+}
+
+.item {
+  display: flex;
+  justify-content: flex-start; /* элементы внутри карточки слева */
+  background-color: var(--slate-700);
+  color: var(--slate-50);
+  padding: 10px 15px;
+  border-radius: 5px;
+  font-size: 16px;
+  width: 600px; /* увеличили ширину примерно на 50% */
+}
+
+.item span {
+  margin-right: 10px; /* пространство между полями */
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+button {
+  background-color: var(--slate-500);
+  color: var(--slate-50);
+  border: none;
+  border-radius: 5px;
+  padding: 8px 16px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.2s;
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+button:hover:not(:disabled) {
+  background-color: var(--slate-600);
+}

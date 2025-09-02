@@ -1,0 +1,26 @@
+.episodesContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-left: 20px;
+  max-width: 50%; /* информация слева, ширина 50% */
+}
+
+.episodeCard {
+  background-color: var(--slate-700);
+  color: var(--slate-50);
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.episodeTitle {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.buttonContainer {
+  display: flex;
+  gap: 10px;
+  margin: 20px 0;
+}
