@@ -15,6 +15,7 @@
 
 .img {
   border-radius: 10px 0 0 10px;
+  width: 250px;
 }
 
 .description {
@@ -47,7 +48,7 @@
   margin: 5px;
 }
 
-/*...*/
+/* Кружки статуса */
 .status {
   height: 10px;
   width: 10px;

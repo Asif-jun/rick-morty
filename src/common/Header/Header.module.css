@@ -16,13 +16,8 @@
   font-size: 18px;
   text-align: center;
   margin-right: 20px;
-  text-decoration: none;
 }
 
 .headerLink:hover {
-  text-decoration: underline;
-}
-
-.activeLink {
-  font-weight: bold;
+  text-decoration: none;
 }

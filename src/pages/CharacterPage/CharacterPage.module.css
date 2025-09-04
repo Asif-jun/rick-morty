@@ -1,35 +1,76 @@
+/* Контейнер всех карточек персонажей */
 .characters {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
 }
 
+/* Каждая карточка персонажа */
 .character {
   margin: 10px;
   padding: 10px;
   width: 300px;
+  background: transparent;
+  border: 2px solid #07ff07;
+  box-shadow: 2px 2px 15px #000000 inset;
   background-color: var(--slate-700);
+  border-radius: 5px;
+  text-align: center;
+  color: #e8e8e8;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+/* Hover эффект — карточка "подпрыгивает" и светится */
+.character:hover {
+  transform: translateY(-5px);
+  cursor: pointer;
+  color: #07ff07;
+  box-shadow: 2px 2px 15px #07ff07 inset;
+  transform: scale(0.98);
+  border-radius: 20px;
+}
+
+/* Имя персонажа сверху карточки */
+.characterName {
+  font-weight: bold;
+  font-size: 32px;
+  margin-bottom: 0.5rem;
+  color: var(--slate-50);
+  background: rgba(0, 0, 0, 0.4); /* полупрозрачный фон */
+  padding: 5px;
   border-radius: 5px;
 }
 
-.characterLink {
+/* Аватар персонажа */
+.avatar {
+  width: 100%;
+  border-radius: 5px;
+  margin-bottom: 0.5rem;
+}
+
+/* Описание персонажа снизу карточки */
+.characterDescription {
+  margin-top: 10px;
+  font-size: 22px;
   color: var(--slate-50);
-  font-weight: bold;
-  font-size: 32px;
-  margin-bottom: 10px;
+  text-decoration: none;
   display: block;
-  text-align: center;
-
-  &:hover {
-    text-decoration: none;
-  }
+  cursor: pointer;
+  background: rgba(0, 0, 0, 0.4);
+  padding: 5px;
+  border-radius: 5px;
 }
 
-.buttonContainer {
-  display: flex;
-  justify-content: center;
-  margin: 30px;
+/* Hover эффект для описания */
+.characterDescription:hover {
+  opacity: 0.8;
 }
 
+/* Поисковик сверху страницы */
 .search {
   height: 60px;
   border: 2px solid var(--slate-700);
@@ -39,4 +80,35 @@
   margin: 20px 0 30px 10px;
   width: calc(100% - 60px);
 }
-/*...*/
+
+/* Контейнер кнопок пагинации */
+.buttonContainer {
+  display: flex;
+  justify-content: center;
+  margin: 30px;
+}
+
+/* ===========================
+  Кнопки пагинации
+=========================== */
+.buttonContainer {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin: 2rem 0;
+}
+
+.linkButton {
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  border-radius: 0.5rem;
+  border: 2px solid #1d0e01; /* px для декоративной рамки */
+  background-color: #94a3b8;
+  color: #5f5a5a;
+  cursor: pointer;
+}
+
+.linkButton:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}

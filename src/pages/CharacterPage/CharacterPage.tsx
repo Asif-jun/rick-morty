@@ -1,10 +1,10 @@
-import { useEffect, useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
 import s from './CharacterPage.module.css'
+import { CharacterNotFound } from './CharacterNotFound'
 
-// Типизация персонажа
-interface Character {
+interface CharacterData {
   id: number
   name: string
   image: string
@@ -12,102 +12,80 @@ interface Character {
   species: string
 }
 
-// Типизация для пагинации
-interface Info {
-  count: number
-  pages: number
-  next: string | null
-  prev: string | null
-}
-
-// Карточка одного персонажа
-const CharacterCard = ({ character }: { character: Character }) => {
-  // Определяем цвет статуса персонажа
-  const getStatusClass = () => {
-    switch (character.status) {
-      case 'Alive':
-        return s.alive
-      case 'Dead':
-        return s.dead
-      default:
-        return s.unknown
-    }
-  }
-
-  return (
-    <div className={s.character}>
-      <div className={s.name}>{character.name}</div>
-      {/* Кружок цвета статуса */}
-      <div className={getStatusClass()}></div>
-      <img src={character.image} alt={character.name} />
-    </div>
-  )
-}
-
 export const CharacterPage = () => {
-  // Состояние для списка персонажей
-  const [characters, setCharacters] = useState<Character[]>([])
-  // Состояние для пагинации
-  const [info, setInfo] = useState<Info>({
-    count: 0,
-    pages: 0,
-    next: null,
-    prev: null,
-  })
-  // Ошибки запроса
+  const [characters, setCharacters] = useState<CharacterData[]>([])
+  const [search, setSearch] = useState('')
   const [error, setError] = useState<string | null>(null)
+  const [loading, setLoading] = useState(true)
+  const [page, setPage] = useState(1)
+  const [info, setInfo] = useState<{ pages: number } | null>(null)
 
-  // Функция для запроса конкретной страницы
-  const fetchPage = (url: string | null) => {
-    if (!url) return
+  useEffect(() => {
+    setLoading(true)
     axios
-      .get<{ results: Character[]; info: Info }>(url)
+      .get(`https://rickandmortyapi.com/api/character?page=${page}`)
       .then(res => {
-        setCharacters(res.data.results) // сохраняем персонажей
-        setInfo(res.data.info) // обновляем инфо для пагинации
-        setError(null) // сбрасываем ошибку
+        setCharacters(res.data.results)
+        setInfo(res.data.info)
+        setError(null)
       })
-      .catch(() => setError('Ошибка загрузки данных'))
+      .catch(() => setError('Не удалось загрузить персонажей'))
+      .finally(() => setLoading(false))
+  }, [page])
+
+  const filteredCharacters = characters.filter(c =>
+    c.name.toLowerCase().includes(search.toLowerCase())
+  )
+
+  const nextPageHandler = () => {
+    if (info && page < info.pages) setPage(page + 1)
   }
 
-  // Первый рендер страницы, загружаем первую страницу персонажей
-  useEffect(() => fetchPage('https://rickandmortyapi.com/api/character'), [])
-
-  // Обработчик поиска по имени
-  const searchHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.currentTarget.value
-    fetchPage(`https://rickandmortyapi.com/api/character?name=${value}`)
+  const previousPageHandler = () => {
+    if (page > 1) setPage(page - 1)
   }
+
+  if (loading) return <div className={s.pageContainer}>Loading...</div>
+  if (error) return <div className={s.pageContainer}>{error}</div>
+  if (filteredCharacters.length === 0) return <CharacterNotFound />
 
   return (
-    <div className='pageContainer'>
-      <h1 className='pageTitle'>Персонажи</h1>
-      {/* Поле поиска */}
+    <div className={s.pageContainer}>
       <input
-        type='search'
+        type='text'
+        placeholder='Search characters...'
         className={s.search}
-        placeholder='Поиск...'
-        onChange={searchHandler}
+        value={search}
+        onChange={e => setSearch(e.target.value)}
       />
 
-      {/* Ошибка запроса */}
-      {error && <div className='errorMessage'>{error}</div>}
-
-      {/* Список персонажей */}
-      <div className={s.list}>
-        {characters.map(c => (
-          <Link key={c.id} to={`/characters/${c.id}`}>
-            <CharacterCard character={c} />
-          </Link>
+      <div className={s.characters}>
+        {filteredCharacters.map(char => (
+          <div className={s.character} key={char.id}>
+            <div className={s.characterName}>{char.name}</div>
+            <Link to={`/character/${char.id}`}>
+              <img src={char.image} alt={char.name} className={s.avatar} />
+            </Link>
+            <div className={s.characterDescription}>
+              {char.status} — {char.species}
+            </div>
+          </div>
         ))}
       </div>
 
-      {/* Кнопки пагинации */}
-      <div className={s.buttons}>
-        <button disabled={!info.prev} onClick={() => fetchPage(info.prev)}>
+      <div className={s.buttonContainer}>
+        <button
+          onClick={previousPageHandler}
+          disabled={page === 1}
+          className={s.linkButton}
+        >
           Назад
         </button>
-        <button disabled={!info.next} onClick={() => fetchPage(info.next)}>
+        <button
+          onClick={nextPageHandler}
+          disabled={info ? page === info.pages : true}
+          className={s.linkButton}
+        >
           Вперед
         </button>
       </div>
