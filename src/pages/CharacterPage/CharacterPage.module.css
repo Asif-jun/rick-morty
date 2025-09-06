@@ -11,7 +11,7 @@
   padding: 10px;
   width: 300px;
   background: transparent;
-  border: 2px solid #07ff07;
+  /* border: 2px solid #07ff07; */
   box-shadow: 2px 2px 15px #000000 inset;
   background-color: var(--slate-700);
   border-radius: 5px;
@@ -26,11 +26,12 @@
 
 /* Hover эффект — карточка "подпрыгивает" и светится */
 .character:hover {
-  transform: translateY(-5px);
+  transform: translateY(-5px) scale(0.98);
   cursor: pointer;
   color: #07ff07;
-  box-shadow: 2px 2px 15px #07ff07 inset;
-  transform: scale(0.98);
+  border: 2px solid #07ff07;
+  box-shadow: 0 0 15px #07ff07,
+    /* наружное свечение */ 2px 2px 15px #07ff07 inset; /* внутреннее свечение */
   border-radius: 20px;
 }
 
@@ -68,17 +69,6 @@
 /* Hover эффект для описания */
 .characterDescription:hover {
   opacity: 0.8;
-}
-
-/* Поисковик сверху страницы */
-.search {
-  height: 60px;
-  border: 2px solid var(--slate-700);
-  font-size: 24px;
-  padding-left: 10px;
-  border-radius: 5px;
-  margin: 20px 0 30px 10px;
-  width: calc(100% - 60px);
 }
 
 /* Контейнер кнопок пагинации */

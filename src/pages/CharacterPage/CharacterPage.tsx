@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import axios from 'axios'
 import s from './CharacterPage.module.css'
 import { CharacterNotFound } from './CharacterNotFound'
+import { SearchBox } from '../SearchBox/SearchBox'
 
 interface CharacterData {
   id: number
@@ -51,14 +52,7 @@ export const CharacterPage = () => {
 
   return (
     <div className={s.pageContainer}>
-      <input
-        type='text'
-        placeholder='Search characters...'
-        className={s.search}
-        value={search}
-        onChange={e => setSearch(e.target.value)}
-      />
-
+      <SearchBox value={search} onChange={setSearch} />
       <div className={s.characters}>
         {filteredCharacters.map(char => (
           <div className={s.character} key={char.id}>

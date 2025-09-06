@@ -1,0 +1,79 @@
+.searchWrapper {
+  position: relative;
+  width: calc(100% - 60px);
+  margin: 20px 0 30px 10px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 1.2rem;
+  overflow: hidden;
+  border: 3px transparent;
+
+  /* фон + градиент */
+  background-image: linear-gradient(var(--slate-900), var(--slate-900)),
+    linear-gradient(
+      137.48deg,
+      #c9a300 10%,
+      #b12f89 45%,
+      #6636c7 67%,
+      #002f99 87%
+    );
+  background-origin: border-box;
+  background-clip: content-box, border-box;
+
+  /* вот тут добавляем явный обводочный цвет */
+  box-shadow: 0 0 0 2px var(--slate-700);
+}
+
+.searchInput {
+  width: 100%;
+  height: 100%;
+  font-size: 24px; /* как в старом */
+  padding-left: 40px; /* как в старом */
+  border: none;
+  outline: none;
+  color: white;
+  background: transparent;
+  z-index: 2;
+}
+
+.searchGlow {
+  position: absolute;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.circle {
+  flex: 1;
+  height: 100%;
+  filter: blur(1rem);
+  animation: pulse 4s infinite;
+}
+
+.circle:nth-of-type(1) {
+  background: rgba(254, 83, 186, 0.4);
+}
+
+.circle:nth-of-type(2) {
+  background: rgba(142, 81, 234, 0.4);
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(0.75);
+    opacity: 0.6;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(0.75);
+    opacity: 0.6;
+  }
+}
