@@ -11,7 +11,7 @@
   padding: 10px;
   width: 300px;
   background: transparent;
-  /* border: 2px solid #07ff07; */
+  border: 2px solid #07ff07;
   box-shadow: 2px 2px 15px #000000 inset;
   background-color: var(--slate-700);
   border-radius: 5px;
@@ -24,36 +24,31 @@
   transition: transform 0.2s ease, box-shadow 0.3s ease;
 }
 
-/* Hover эффект — карточка "подпрыгивает" и светится */
 .character:hover {
   transform: translateY(-5px) scale(0.98);
   cursor: pointer;
   color: #07ff07;
   border: 2px solid #07ff07;
-  box-shadow: 0 0 15px #07ff07,
-    /* наружное свечение */ 2px 2px 15px #07ff07 inset; /* внутреннее свечение */
+  box-shadow: 0 0 15px #07ff07, 2px 2px 15px #07ff07 inset;
   border-radius: 20px;
 }
 
-/* Имя персонажа сверху карточки */
 .characterName {
   font-weight: bold;
   font-size: 32px;
   margin-bottom: 0.5rem;
   color: var(--slate-50);
-  background: rgba(0, 0, 0, 0.4); /* полупрозрачный фон */
+  background: rgba(0, 0, 0, 0.4);
   padding: 5px;
   border-radius: 5px;
 }
 
-/* Аватар персонажа */
 .avatar {
   width: 100%;
   border-radius: 5px;
   margin-bottom: 0.5rem;
 }
 
-/* Описание персонажа снизу карточки */
 .characterDescription {
   margin-top: 10px;
   font-size: 22px;
@@ -66,7 +61,6 @@
   border-radius: 5px;
 }
 
-/* Hover эффект для описания */
 .characterDescription:hover {
   opacity: 0.8;
 }
@@ -75,30 +69,24 @@
 .buttonContainer {
   display: flex;
   justify-content: center;
-  margin: 30px;
-}
-
-/* ===========================
-  Кнопки пагинации
-=========================== */
-.buttonContainer {
-  display: flex;
-  justify-content: center;
   gap: 1rem;
   margin: 2rem 0;
 }
 
-.linkButton {
-  padding: 0.5rem 1rem;
-  font-size: 1rem;
-  border-radius: 0.5rem;
-  border: 2px solid #1d0e01; /* px для декоративной рамки */
-  background-color: #94a3b8;
-  color: #5f5a5a;
-  cursor: pointer;
+/* Страница + состояния */
+.pageContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.linkButton:disabled {
-  background-color: #ccc;
-  cursor: not-allowed;
+.loader {
+  margin: 1rem 0;
+  opacity: 0.85;
+}
+
+.error {
+  color: #ff6b6b;
+  margin: 1rem 0;
+  text-align: center;
 }

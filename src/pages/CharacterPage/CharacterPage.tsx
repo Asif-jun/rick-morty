@@ -4,6 +4,7 @@ import axios from 'axios'
 import s from './CharacterPage.module.css'
 import { CharacterNotFound } from './CharacterNotFound'
 import { SearchBox } from '../SearchBox/SearchBox'
+import { AnimatedButton } from '../../common/AnimatedButton/AnimatedButton'
 
 interface CharacterData {
   id: number
@@ -46,42 +47,46 @@ export const CharacterPage = () => {
     if (page > 1) setPage(page - 1)
   }
 
-  if (loading) return <div className={s.pageContainer}>Loading...</div>
-  if (error) return <div className={s.pageContainer}>{error}</div>
-  if (filteredCharacters.length === 0) return <CharacterNotFound />
-
   return (
     <div className={s.pageContainer}>
       <SearchBox value={search} onChange={setSearch} />
-      <div className={s.characters}>
-        {filteredCharacters.map(char => (
-          <div className={s.character} key={char.id}>
-            <div className={s.characterName}>{char.name}</div>
-            <Link to={`/character/${char.id}`}>
-              <img src={char.image} alt={char.name} className={s.avatar} />
-            </Link>
-            <div className={s.characterDescription}>
-              {char.status} — {char.species}
+
+      {error && <div className={s.error}>{error}</div>}
+      {loading && <div className={s.loader}>Loading...</div>}
+
+      {!loading && !error && filteredCharacters.length === 0 && (
+        <CharacterNotFound />
+      )}
+
+      {!loading && !error && filteredCharacters.length > 0 && (
+        <div className={s.characters}>
+          {filteredCharacters.map(char => (
+            <div className={s.character} key={char.id}>
+              <div className={s.characterName}>{char.name}</div>
+              <Link to={`/character/${char.id}`}>
+                <img src={char.image} alt={char.name} className={s.avatar} />
+              </Link>
+              <div className={s.characterDescription}>
+                {char.status} — {char.species}
+              </div>
             </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
 
       <div className={s.buttonContainer}>
-        <button
+        <AnimatedButton
           onClick={previousPageHandler}
-          disabled={page === 1}
-          className={s.linkButton}
+          disabled={loading || page === 1}
         >
           Назад
-        </button>
-        <button
+        </AnimatedButton>
+        <AnimatedButton
           onClick={nextPageHandler}
-          disabled={info ? page === info.pages : true}
-          className={s.linkButton}
+          disabled={loading || (info ? page === info.pages : true)}
         >
           Вперед
-        </button>
+        </AnimatedButton>
       </div>
     </div>
   )

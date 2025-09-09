@@ -6,11 +6,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
-
   border-radius: 1.2rem;
   overflow: hidden;
   border: 3px transparent;
-
   /* фон + градиент */
   background-image: linear-gradient(var(--slate-900), var(--slate-900)),
     linear-gradient(
@@ -22,7 +20,9 @@
     );
   background-origin: border-box;
   background-clip: content-box, border-box;
-
+  backdrop-filter: blur(1rem);
+  transition: 0.5s;
+  animation: gradient_301 5s ease infinite;
   /* вот тут добавляем явный обводочный цвет */
   box-shadow: 0 0 0 2px var(--slate-700);
 }
@@ -34,7 +34,7 @@
   padding-left: 40px; /* как в старом */
   border: none;
   outline: none;
-  color: white;
+  color: #002f99;
   background: transparent;
   z-index: 2;
 }
