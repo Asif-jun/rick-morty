@@ -1,0 +1,38 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+  box-sizing: border-box;
+  min-height: 175px; /* базовая высота для всех карточек */
+  width: 300px;
+  padding: 15px;
+  border-radius: 10px;
+  border: 2px solid #07ff07;
+  background-color: var(--slate-700);
+  color: var(--slate-50);
+  text-align: center;
+  box-shadow: 2px 2px 15px #000 inset;
+  transition: transform 0.2s ease, box-shadow 0.3s ease, color 0.2s ease,
+    border-radius 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px) scale(0.98);
+  cursor: pointer;
+  color: #07ff07;
+  border: 2px solid #07ff07;
+  box-shadow: 0 0 15px #07ff07, 2px 2px 15px #07ff07 inset;
+  border-radius: 20px;
+}
+
+.title {
+  font-weight: bold;
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.details {
+  font-size: 16px;
+  line-height: 1.4;
+}

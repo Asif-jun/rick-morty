@@ -1,7 +1,6 @@
 import type { Info } from './common'
 
-// Персонаж
-export interface Character {
+export type Character = {
   id: number
   name: string
   status: 'Alive' | 'Dead' | 'unknown'
@@ -22,8 +21,7 @@ export interface Character {
   created: string
 }
 
-// Ответ от API при запросе списка персонажей
-export interface CharacterResponse {
+export type CharacterResponse = {
   info: Info
   results: Character[]
 }

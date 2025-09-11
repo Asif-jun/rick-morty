@@ -1,26 +1,30 @@
-.episodesContainer {
+.pageContainer {
   display: flex;
   flex-direction: column;
+  align-items: center;
+}
+
+.cardsContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 15px;
-  margin-left: 20px;
-  max-width: 50%; /* информация слева, ширина 50% */
-}
-
-.episodeCard {
-  background-color: var(--slate-700);
-  color: var(--slate-50);
-  padding: 15px;
-  border-radius: 10px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-}
-
-.episodeTitle {
-  font-size: 20px;
-  margin-bottom: 10px;
+  margin-top: 20px;
 }
 
 .buttonContainer {
   display: flex;
-  gap: 10px;
-  margin: 20px 0;
+  justify-content: center;
+  gap: 1rem;
+  margin: 2rem 0;
+}
+
+.error {
+  color: #ff6b6b;
+  margin: 1rem 0;
+}
+
+.loader {
+  margin: 1rem 0;
+  opacity: 0.85;
 }

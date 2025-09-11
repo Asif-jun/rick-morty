@@ -1,6 +1,6 @@
 import s from './SearchBox.module.css'
 
-interface SearchBoxProps {
+type SearchBoxProps = {
   value: string
   onChange: (value: string) => void
 }

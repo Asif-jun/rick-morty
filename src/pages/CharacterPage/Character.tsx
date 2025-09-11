@@ -4,7 +4,7 @@ import axios from 'axios'
 import s from './Character.module.css'
 import type { Character as CharacterType } from '../../types/character'
 
-// Функция для определения класса цвета кружка статуса
+// Функция для определения класса кружка статуса
 function getStatusClass(status: CharacterType['status']) {
   switch (status) {
     case 'Alive':
@@ -18,26 +18,23 @@ function getStatusClass(status: CharacterType['status']) {
 
 export const Character = () => {
   const { id } = useParams<{ id: string }>() // Берём id персонажа из URL
+  const [character, setCharacter] = useState<CharacterType | null>(null)
+  const [error, setError] = useState<string | null>(null)
+  const [loading, setLoading] = useState(true)
 
-  const [character, setCharacter] = useState<CharacterType | null>(null) // Данные персонажа
-  const [error, setError] = useState<string | null>(null) // Ошибка при загрузке
-  const [loading, setLoading] = useState(true) // Статус загрузки
-
-  // useEffect для запроса данных персонажа по id
   useEffect(() => {
     if (!id) return
     setLoading(true)
     axios
       .get<CharacterType>(`https://rickandmortyapi.com/api/character/${id}`)
       .then(res => {
-        setCharacter(res.data) // Сохраняем данные персонажа
-        setError(null) // Сбрасываем ошибку
+        setCharacter(res.data)
+        setError(null)
       })
-      .catch(() => setError('Не удалось загрузить персонажа')) // В случае ошибки
-      .finally(() => setLoading(false)) // Снимаем статус загрузки
+      .catch(() => setError('Не удалось загрузить персонажа'))
+      .finally(() => setLoading(false))
   }, [id])
 
-  // Рендерим разные состояния
   if (loading) return <div className='pageContainer'>Loading...</div>
   if (error)
     return (
@@ -55,7 +52,6 @@ export const Character = () => {
       <div className={s.container}>
         <img className={s.img} src={image} alt={name} />
         <div className={s.description}>
-          {/* Статус персонажа с кружком */}
           <div className={s.statusContainer}>
             <div className={getStatusClass(status)} />
             <div>
@@ -63,13 +59,11 @@ export const Character = () => {
             </div>
           </div>
 
-          {/* Последнее известное местоположение */}
           <div className={s.info}>
             <p className={s.subTitle}>Last known location:</p>
             <p className={s.subTitleResult}>{location?.name || 'unknown'}</p>
           </div>
 
-          {/* Кол-во эпизодов */}
           <div className={s.info}>
             <p className={s.subTitle}>Episode count:</p>
             <p className={s.subTitleResult}>{episode?.length || 0}</p>
@@ -77,7 +71,6 @@ export const Character = () => {
         </div>
       </div>
 
-      {/* Кнопка назад */}
       <Link to='/characters' className='linkButton'>
         Go back
       </Link>

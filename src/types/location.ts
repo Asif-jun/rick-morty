@@ -1,7 +1,6 @@
 import type { Info } from './common'
 
-// Локация
-export interface Location {
+export type Location = {
   id: number
   name: string
   type: string
@@ -11,8 +10,7 @@ export interface Location {
   created: string
 }
 
-// Ответ от API при запросе списка локаций
-export interface LocationResponse {
+export type LocationResponse = {
   info: Info
   results: Location[]
 }

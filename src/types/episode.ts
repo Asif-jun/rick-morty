@@ -1,7 +1,6 @@
 import type { Info } from './common'
 
-// Эпизод
-export interface Episode {
+export type Episode = {
   id: number
   name: string
   air_date: string
@@ -11,8 +10,7 @@ export interface Episode {
   created: string
 }
 
-// Ответ от API при запросе списка эпизодов
-export interface EpisodeResponse {
+export type EpisodeResponse = {
   info: Info
   results: Episode[]
 }
