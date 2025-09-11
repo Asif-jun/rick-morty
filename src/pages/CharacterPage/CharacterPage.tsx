@@ -4,14 +4,15 @@ import { Link } from 'react-router-dom'
 import axios from 'axios'
 import s from './CharacterPage.module.css'
 import { SearchBox } from '../SearchBox/SearchBox'
-import { AnimatedButton } from '../../common/AnimatedButton/AnimatedButton'
+import { AnimatedButton } from '../../common/components/AnimatedButton/AnimatedButton'
+import { NotFound } from '../../common/components/NotFound/NotFound'
 import type { Character, CharacterResponse } from '../../types/character'
 
 export const CharacterPage = () => {
   const [characters, setCharacters] = useState<Character[]>([])
   const [search, setSearch] = useState('')
   const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
+  const [error, setError] = useState(false)
   const [page, setPage] = useState(1)
   const [totalPages, setTotalPages] = useState(1)
 
@@ -24,9 +25,9 @@ export const CharacterPage = () => {
       .then(res => {
         setCharacters(res.data.results)
         setTotalPages(res.data.info.pages)
-        setError(null)
+        setError(false)
       })
-      .catch(() => setError('Не удалось загрузить персонажей'))
+      .catch(() => setError(true))
       .finally(() => setLoading(false))
   }, [page, search])
 
@@ -41,38 +42,41 @@ export const CharacterPage = () => {
     <div className={s.pageContainer}>
       <SearchBox value={search} onChange={setSearch} />
 
-      {error && <div className={s.error}>{error}</div>}
       {loading && <div className={s.loader}>Loading...</div>}
 
-      {!loading && !error && characters.length === 0 && (
-        <div className={s.error}>Персонажи не найдены</div>
-      )}
+      {/* Универсальный NotFound через телевизор */}
+      {!loading && (error || characters.length === 0) && <NotFound />}
 
-      <div className={s.cardContainer}>
-        {characters.map(c => (
-          <div key={c.id} className={s.card}>
-            <div className={s.cardTitle}>{c.name}</div>
-            <Link to={`/character/${c.id}`}>
-              <img src={c.image} alt={c.name} className={s.cardImage} />
-            </Link>
-            <div className={s.cardDescription}>
-              {c.status} — {c.species}
-            </div>
+      {/* Карточки и кнопки рендерятся только если есть персонажи и нет ошибки */}
+      {!loading && !error && characters.length > 0 && (
+        <>
+          <div className={s.cardContainer}>
+            {characters.map(c => (
+              <div key={c.id} className={s.card}>
+                <div className={s.cardTitle}>{c.name}</div>
+                <Link to={`/characters/${c.id}`}>
+                  <img src={c.image} alt={c.name} className={s.cardImage} />
+                </Link>
+                <div className={s.cardDescription}>
+                  {c.status} — {c.species}
+                </div>
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
 
-      <div className={s.buttonContainer}>
-        <AnimatedButton onClick={prevPage} disabled={loading || page === 1}>
-          Назад
-        </AnimatedButton>
-        <AnimatedButton
-          onClick={nextPage}
-          disabled={loading || page === totalPages}
-        >
-          Вперед
-        </AnimatedButton>
-      </div>
+          <div className={s.buttonContainer}>
+            <AnimatedButton onClick={prevPage} disabled={loading || page === 1}>
+              Назад
+            </AnimatedButton>
+            <AnimatedButton
+              onClick={nextPage}
+              disabled={loading || page === totalPages}
+            >
+              Вперед
+            </AnimatedButton>
+          </div>
+        </>
+      )}
     </div>
   )
 }
