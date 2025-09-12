@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 import s from './LocationPage.module.css'
+import btn from '../../common/components/AnimatedButton/AnimatedButton.module.css'
 import { SearchBox } from '../SearchBox/SearchBox'
 import { AnimatedButton } from '../../common/components/AnimatedButton/AnimatedButton'
 import { Card } from '../../common/components/Card/Card'
@@ -72,15 +73,17 @@ export const LocationPage = () => {
             ))}
           </div>
 
-          <div className={s.buttonContainer}>
+          <div className={btn.buttonContainer}>
             <AnimatedButton
               onClick={previousPageHandler}
+              delay='0s'
               disabled={loading || page === 1}
             >
               Назад
             </AnimatedButton>
             <AnimatedButton
               onClick={nextPageHandler}
+              delay='0.2s'
               disabled={loading || page === totalPages}
             >
               Вперед

@@ -1,37 +1,137 @@
+@import url('https://fonts.googleapis.com/css2?family=Pixy+Regular&display=swap');
+
 .animatedButton {
-  padding: 0.75rem 1.25rem;
-  min-width: 96px;
-  font-size: 1rem;
+  padding: 15px 30px;
+  font-size: 16px;
   font-weight: 600;
-  font-family: Menlo, 'Roboto Mono', monospace;
+  font-family: 'Pixy Regular', monospace;
   color: #fff;
-  background-color: rgb(41, 41, 41); /* обычный фон */
-  border: none;
+  background: #000;
+  border: 2px solid #2a2b3a;
   border-radius: 8px;
   cursor: pointer;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.137);
-  transition: transform 0.2s ease, background-color 0.2s ease,
-    box-shadow 0.2s ease, color 0.2s ease, border 0.2s ease;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s, box-shadow 0.3s, border 0.3s;
+  box-shadow: 0 2px 10px 0 green;
+  min-width: 120px; /* фиксируем размер */
+  height: 50px;
+}
+
+.animatedButton span {
+  position: relative;
+  z-index: 1;
   display: inline-block;
+  letter-spacing: 0.1rem;
+  transition: color 0.3s;
+}
+
+.animatedButton span::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  transform: translateY(-50%);
+  color: #0f0;
   text-align: center;
+  display: block;
+  pointer-events: none;
+  animation-delay: var(--animation-delay, 0s);
 }
 
-/* 🔥 Визуальный hover с ярким жёлтым акцентом */
-.animatedButton:hover,
-.animatedButton:focus {
-  background-color: rgb(15, 15, 15); /* ещё темнее фон */
-  color: #ffd700; /* насыщенный золотисто-жёлтый */
-  transform: translateY(-2px) scale(1.05);
-  box-shadow: 0 0 12px #ffd700, 0 0 24px #ffd700; /* жёлтое свечение */
-  border: 2px solid #ffd700; /* обводка для акцента */
+.animatedButton:hover:not(:disabled),
+.animatedButton:focus:not(:disabled) {
+  transform: scale(1.09);
+  box-shadow: 0px 0px 10px 0px rgba(119, 68, 255, 0.7);
+  border: 2px solid rgb(9, 255, 0);
 }
 
-/* 🔒 Disabled состояние */
+.animatedButton:hover span,
+.animatedButton:focus span {
+  color: transparent;
+}
+
+.animatedButton:hover span::before,
+.animatedButton:focus span::before {
+  animation: chitchat 1.2s linear infinite; /* бесконечная */
+}
+
 .animatedButton:disabled {
   background-color: #cfcfcf;
   color: #888;
   cursor: not-allowed;
   box-shadow: none;
-  transform: none;
   border: none;
+}
+
+/* Контейнер для кнопок */
+.buttonContainer {
+  display: flex;
+  gap: 30px;
+  margin: 20px 0;
+  justify-content: center;
+}
+
+@keyframes chitchat {
+  0% {
+    content: '#';
+  }
+  5% {
+    content: '.';
+  }
+  10% {
+    content: '^{';
+  }
+  15% {
+    content: '-!';
+  }
+  20% {
+    content: '#$_';
+  }
+  25% {
+    content: '№:0';
+  }
+  30% {
+    content: '#{+.';}35%{content: '@}-?';
+  }
+  40% {
+    content: '?{4@%';
+  }
+  45% {
+    content: '=.,^!';
+  }
+  50% {
+    content: '?2@%';
+  }
+  55% {
+    content: '\\;1}]';
+  }
+  60% {
+    content: '?{%:%';
+  }
+  65% {
+    content: '|{f[4';
+  }
+  70% {
+    content: '{4%0%';
+  }
+  75% {
+    content: "'1_0<";
+  }
+  80% {
+    content: '{0%';
+  }
+  85% {
+    content: "]>'";
+  }
+  90% {
+    content: '4';
+  }
+  95% {
+    content: '2';
+  }
+  100% {
+    content: '';
+  }
 }

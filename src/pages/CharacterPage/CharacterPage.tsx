@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
 import s from './CharacterPage.module.css'
+import btn from '../../common/components/AnimatedButton/AnimatedButton.module.css'
 import { SearchBox } from '../SearchBox/SearchBox'
 import { AnimatedButton } from '../../common/components/AnimatedButton/AnimatedButton'
 import { NotFound } from '../../common/components/NotFound/NotFound'
@@ -44,12 +45,11 @@ export const CharacterPage = () => {
 
       {loading && <div className={s.loader}>Loading...</div>}
 
-      {/* Универсальный NotFound через телевизор */}
       {!loading && (error || characters.length === 0) && <NotFound />}
 
-      {/* Карточки и кнопки рендерятся только если есть персонажи и нет ошибки */}
       {!loading && !error && characters.length > 0 && (
         <>
+          {/* Карточки */}
           <div className={s.cardContainer}>
             {characters.map(c => (
               <div key={c.id} className={s.card}>
@@ -64,12 +64,18 @@ export const CharacterPage = () => {
             ))}
           </div>
 
-          <div className={s.buttonContainer}>
-            <AnimatedButton onClick={prevPage} disabled={loading || page === 1}>
+          {/* Контейнер кнопок с едиными стилями */}
+          <div className={btn.buttonContainer}>
+            <AnimatedButton
+              onClick={prevPage}
+              delay='0s'
+              disabled={loading || page === 1}
+            >
               Назад
             </AnimatedButton>
             <AnimatedButton
               onClick={nextPage}
+              delay='0.2s'
               disabled={loading || page === totalPages}
             >
               Вперед

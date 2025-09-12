@@ -10,13 +10,8 @@
   justify-content: center;
   gap: 15px;
   margin-top: 20px;
-}
-
-.buttonContainer {
-  display: flex;
-  justify-content: center;
-  gap: 1rem;
-  margin: 2rem 0;
+  width: 100%;
+  min-width: 1200px;
 }
 
 .loader {

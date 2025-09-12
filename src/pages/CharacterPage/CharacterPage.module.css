@@ -10,6 +10,7 @@
   justify-content: center;
   gap: 15px;
   margin-top: 20px;
+  width: 100%;
 }
 
 .card {
@@ -51,10 +52,4 @@
 .cardDescription {
   font-size: 18px;
   margin-top: 10px;
-}
-
-.buttonContainer {
-  display: flex;
-  gap: 15px;
-  margin: 20px 0;
 }
