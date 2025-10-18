@@ -1,12 +1,12 @@
+// LocationPage.tsx
 import { useEffect, useState } from 'react'
 import axios from 'axios'
-import s from './LocationPage.module.css'
-import btn from '../../common/components/AnimatedButton/AnimatedButton.module.css'
-import { SearchBox } from '../SearchBox/SearchBox'
-import { AnimatedButton } from '../../common/components/AnimatedButton/AnimatedButton'
-import { Card } from '../../common/components/Card/Card'
-import { NotFound } from '../../common/components/NotFound/NotFound'
+import { SearchBox } from '../searchBox/SearchBox'
+import { AnimatedButton } from '../../common/components/animatedButton/AnimatedButton'
+import { Card } from '../../common/components/card/Card'
+import { NotFound } from '../../common/components/notFound/NotFound'
 import type { Location, LocationResponse } from '../../types/location'
+import { PageTemplate } from '../../common/components/pageTemplate/PageTemplate'
 
 export const LocationPage = () => {
   const [locations, setLocations] = useState<Location[]>([])
@@ -31,66 +31,77 @@ export const LocationPage = () => {
       .finally(() => setLoading(false))
   }, [page, search])
 
-  const nextPageHandler = () => {
+  const nextPage = () => {
     if (page < totalPages) setPage(prev => prev + 1)
   }
 
-  const previousPageHandler = () => {
+  const prevPage = () => {
     if (page > 1) setPage(prev => prev - 1)
   }
 
   return (
-    <div className={s.pageContainer}>
-      <SearchBox value={search} onChange={setSearch} />
-
-      {loading && <div className={s.loader}>Loading...</div>}
-
-      {!loading && (error || locations.length === 0) && <NotFound />}
-
-      {!loading && !error && locations.length > 0 && (
-        <>
-          <div className={s.cardsContainer}>
-            {locations.map(loc => (
-              <Card
-                key={loc.id}
-                title={loc.name}
-                details={
-                  <>
-                    <span>
-                      <b>Тип:</b> {loc.type}
-                    </span>
-                    <br />
-                    <span>
-                      <b>Измерение:</b> {loc.dimension}
-                    </span>
-                    <br />
-                    <span>
-                      <b>Персонажей:</b> {loc.residents.length}
-                    </span>
-                  </>
-                }
-              />
-            ))}
-          </div>
-
-          <div className={btn.buttonContainer}>
-            <AnimatedButton
-              onClick={previousPageHandler}
-              delay='0s'
-              disabled={loading || page === 1}
-            >
-              Назад
-            </AnimatedButton>
-            <AnimatedButton
-              onClick={nextPageHandler}
-              delay='0.2s'
-              disabled={loading || page === totalPages}
-            >
-              Вперед
-            </AnimatedButton>
-          </div>
-        </>
-      )}
-    </div>
+    <PageTemplate
+      searchComponent={
+        <SearchBox
+          value={search}
+          onChange={val => {
+            setSearch(val)
+            setPage(1)
+          }}
+        />
+      }
+      loading={loading}
+      error={error || locations.length === 0}
+      notFoundComponent={<NotFound />}
+      paginationComponent={
+        <div
+          style={{
+            display: 'flex',
+            gap: '15px',
+            justifyContent: 'center',
+            marginTop: '20px',
+          }}
+        >
+          <AnimatedButton onClick={prevPage} disabled={page === 1}>
+            Назад
+          </AnimatedButton>
+          <AnimatedButton onClick={nextPage} disabled={page === totalPages}>
+            Вперед
+          </AnimatedButton>
+        </div>
+      }
+    >
+      <div
+        style={{
+          display: 'flex',
+          flexWrap: 'wrap',
+          justifyContent: 'center',
+          gap: '15px',
+          marginTop: '20px',
+        }}
+      >
+        {locations.map(loc => (
+          <Card
+            key={loc.id}
+            title={loc.name}
+            details={
+              <>
+                <span>
+                  <b>Тип:</b> {loc.type}
+                </span>
+                <br />
+                <span>
+                  <b>Измерение:</b> {loc.dimension}
+                </span>
+                <br />
+                <span>
+                  <b>Персонажей:</b> {loc.residents.length}
+                </span>
+              </>
+            }
+          />
+        ))}
+      </div>
+    </PageTemplate>
   )
 }

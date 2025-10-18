@@ -1,11 +1,13 @@
+// EpisodePage.tsx
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 import s from './EpisodePage.module.css'
 import btn from '../../common/components/AnimatedButton/AnimatedButton.module.css'
-import { SearchBox } from '../SearchBox/SearchBox'
-import { AnimatedButton } from '../../common/components/AnimatedButton/AnimatedButton'
-import { Card } from '../../common/components/Card/Card'
-import { NotFound } from '../../common/components/NotFound/NotFound'
+import { SearchBox } from '../searchBox/SearchBox'
+import { AnimatedButton } from '../../common/components/animatedButton/AnimatedButton'
+import { NotFound } from '../../common/components/notFound/NotFound'
+import { PageTemplate } from '../../common/components/pageTemplate/PageTemplate'
+import { Card } from '../../common/components/card/Card'
 import type { Episode, EpisodeResponse } from '../../types/episode'
 
 export const EpisodePage = () => {
@@ -31,74 +33,53 @@ export const EpisodePage = () => {
       .finally(() => setLoading(false))
   }, [page, search])
 
-  const nextPageHandler = () => {
+  const nextPage = () => {
     if (page < totalPages) setPage(prev => prev + 1)
   }
-
-  const previousPageHandler = () => {
+  const prevPage = () => {
     if (page > 1) setPage(prev => prev - 1)
   }
 
   return (
-    <div className={s.pageContainer}>
-      <h1 className='pageTitle'>Эпизоды</h1>
-
-      <SearchBox
-        value={search}
-        onChange={val => {
-          setSearch(val)
-          setPage(1)
-        }}
-      />
-
-      {loading && <div className={s.loader}>Loading...</div>}
-
-      {!loading && (error || episodes.length === 0) && <NotFound />}
-
-      {!loading && !error && episodes.length > 0 && (
-        <>
-          <div className={s.cardsContainer}>
-            {episodes.map(ep => (
-              <Card
-                key={ep.id}
-                title={ep.name}
-                details={
-                  <>
-                    <span>
-                      <b>Дата выхода:</b> {ep.air_date}
-                    </span>
-                    <br />
-                    <span>
-                      <b>Код эпизода:</b> {ep.episode}
-                    </span>
-                    <br />
-                    <span>
-                      <b>Персонажей:</b> {ep.characters.length}
-                    </span>
-                  </>
-                }
-              />
-            ))}
-          </div>
-
-          <div className={btn.buttonContainer}>
-            <AnimatedButton
-              onClick={previousPageHandler}
-              delay='0s'
-              disabled={loading || page === 1}
-            >
-              Назад
-            </AnimatedButton>
-            <AnimatedButton
-              onClick={nextPageHandler}
-              delay='0.2s'
-              disabled={loading || page === totalPages}
-            >
-              Вперед
-            </AnimatedButton>
-          </div>
-        </>
-      )}
-    </div>
+    <PageTemplate
+      searchComponent={<SearchBox value={search} onChange={setSearch} />}
+      loading={loading}
+      error={error || episodes.length === 0}
+      notFoundComponent={<NotFound />}
+      paginationComponent={
+        <div className={btn.buttonContainer}>
+          <AnimatedButton onClick={prevPage} disabled={page === 1}>
+            Назад
+          </AnimatedButton>
+          <AnimatedButton onClick={nextPage} disabled={page === totalPages}>
+            Вперед
+          </AnimatedButton>
+        </div>
+      }
+    >
+      <div className={s.cardsContainer}>
+        {episodes.map(ep => (
+          <Card
+            key={ep.id}
+            title={ep.name}
+            details={
+              <>
+                <span>
+                  <b>Дата выхода:</b> {ep.air_date}
+                </span>
+                <br />
+                <span>
+                  <b>Код эпизода:</b> {ep.episode}
+                </span>
+                <br />
+                <span>
+                  <b>Персонажей:</b> {ep.characters.length}
+                </span>
+              </>
+            }
+          />
+        ))}
+      </div>
+    </PageTemplate>
   )
 }

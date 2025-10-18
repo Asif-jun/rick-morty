@@ -1,12 +1,13 @@
 // CharacterPage.tsx
 import { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
 import axios from 'axios'
 import s from './CharacterPage.module.css'
-import btn from '../../common/components/AnimatedButton/AnimatedButton.module.css'
-import { SearchBox } from '../SearchBox/SearchBox'
-import { AnimatedButton } from '../../common/components/AnimatedButton/AnimatedButton'
-import { NotFound } from '../../common/components/NotFound/NotFound'
+import btn from '../../common/components/animatedButton/AnimatedButton.module.css'
+import { SearchBox } from '../searchBox/SearchBox'
+import { AnimatedButton } from '../../common/components/animatedButton/AnimatedButton'
+import { NotFound } from '../../common/components/notFound/NotFound'
+import { PageTemplate } from '../../common/components/pageTemplate/PageTemplate'
+import { Card } from '../../common/components/card/Card'
 import type { Character, CharacterResponse } from '../../types/character'
 
 export const CharacterPage = () => {
@@ -24,7 +25,7 @@ export const CharacterPage = () => {
         `https://rickandmortyapi.com/api/character?page=${page}&name=${search}`
       )
       .then(res => {
-        setCharacters(res.data.results)
+        setCharacters(res.data.results || [])
         setTotalPages(res.data.info.pages)
         setError(false)
       })
@@ -40,49 +41,41 @@ export const CharacterPage = () => {
   }
 
   return (
-    <div className={s.pageContainer}>
-      <SearchBox value={search} onChange={setSearch} />
-
-      {loading && <div className={s.loader}>Loading...</div>}
-
-      {!loading && (error || characters.length === 0) && <NotFound />}
-
-      {!loading && !error && characters.length > 0 && (
-        <>
-          {/* Карточки */}
-          <div className={s.cardContainer}>
-            {characters.map(c => (
-              <div key={c.id} className={s.card}>
-                <div className={s.cardTitle}>{c.name}</div>
-                <Link to={`/characters/${c.id}`}>
-                  <img src={c.image} alt={c.name} className={s.cardImage} />
-                </Link>
-                <div className={s.cardDescription}>
-                  {c.status} — {c.species}
-                </div>
+    <PageTemplate
+      searchComponent={<SearchBox value={search} onChange={setSearch} />}
+      loading={loading}
+      error={error} // ❌ только реальные ошибки
+      notFoundComponent={<NotFound message='Character not found' />} // телевизор для пустого списка
+      paginationComponent={
+        <div className={btn.buttonContainer}>
+          <AnimatedButton onClick={prevPage} disabled={page === 1}>
+            Назад
+          </AnimatedButton>
+          <AnimatedButton onClick={nextPage} disabled={page === totalPages}>
+            Вперед
+          </AnimatedButton>
+        </div>
+      }
+      cardsClassName={s.cardContainer}
+    >
+      {characters.map(c => (
+        <Card
+          key={c.id}
+          title={c.name}
+          details={
+            <>
+              <img
+                src={c.image}
+                alt={c.name}
+                style={{ width: '100%', borderRadius: '5px' }}
+              />
+              <div>
+                {c.status} — {c.species}
               </div>
-            ))}
-          </div>
-
-          {/* Контейнер кнопок с едиными стилями */}
-          <div className={btn.buttonContainer}>
-            <AnimatedButton
-              onClick={prevPage}
-              delay='0s'
-              disabled={loading || page === 1}
-            >
-              Назад
-            </AnimatedButton>
-            <AnimatedButton
-              onClick={nextPage}
-              delay='0.2s'
-              disabled={loading || page === totalPages}
-            >
-              Вперед
-            </AnimatedButton>
-          </div>
-        </>
-      )}
-    </div>
+            </>
+          }
+        />
+      ))}
+    </PageTemplate>
   )
 }
