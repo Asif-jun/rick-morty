@@ -1,11 +1,13 @@
+// src/common/components/pageTemplate/PageTemplate.tsx
 import React from 'react'
+import type { ErrorType } from '../../hooks/useFetch'
 
 type PageTemplateProps = {
   searchComponent?: React.ReactNode
   loading?: boolean
-  error?: string | boolean
+  errorType?: ErrorType // 'network' | 'notFound' | null
   notFoundComponent?: React.ReactNode
-  children: React.ReactNode
+  children?: React.ReactNode
   paginationComponent?: React.ReactNode
   cardsClassName?: string
 }
@@ -13,8 +15,8 @@ type PageTemplateProps = {
 export const PageTemplate: React.FC<PageTemplateProps> = ({
   searchComponent,
   loading = false,
-  error = false,
-  notFoundComponent,
+  errorType = null,
+  notFoundComponent = null,
   children,
   paginationComponent,
   cardsClassName,
@@ -27,18 +29,18 @@ export const PageTemplate: React.FC<PageTemplateProps> = ({
 
       {loading && <div className='loader'>Loading...</div>}
 
-      {/* Ошибка без NotFound */}
-      {!loading && error && !notFoundComponent && (
-        <div className='errorMessage'>
-          {typeof error === 'string' ? error : 'Something went wrong'}
-        </div>
+      {/* Network (generic) error */}
+      {!loading && errorType === 'network' && (
+        <div className='errorMessage'>Something went wrong</div>
       )}
 
-      {/* Пустой результат или ошибка с NotFound */}
-      {!loading && (!hasChildren || error) && notFoundComponent}
+      {/* Not found — only when specific notFoundComponent is provided */}
+      {!loading && errorType === 'notFound' && notFoundComponent}
 
-      {/* Основной контент */}
-      {!loading && !error && hasChildren && (
+      {/* Normal content when no error and we have children */}
+      {!loading && !errorType && !hasChildren && notFoundComponent}
+
+      {!loading && !errorType && hasChildren && (
         <>
           <div className={cardsClassName || 'cardsContainer'}>{children}</div>
           {paginationComponent}

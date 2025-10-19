@@ -1,10 +1,21 @@
+// NotFound.tsx
 import s from './NotFound.module.css'
 
 type NotFoundProps = {
+  type?: 'character' | 'location' | 'episode' | 'network'
   message?: string
 }
 
-export const NotFound = ({ message }: NotFoundProps) => {
+const messages: Record<string, string> = {
+  character: 'Character not found',
+  location: 'Location not found',
+  episode: 'Episode not found',
+  network: 'Network error',
+}
+
+export const NotFound = ({ type, message }: NotFoundProps) => {
+  const displayMessage = message || (type ? messages[type] : 'NOT FOUND')
+
   return (
     <div className={s.main_wrapper}>
       <div className={s.main}>
@@ -20,29 +31,14 @@ export const NotFound = ({ message }: NotFoundProps) => {
 
         {/* Телевизор */}
         <div className={s.tv}>
-          <div className={s.cruve}>
-            <svg
-              className={s.curve_svg}
-              version='1.1'
-              xmlns='http://www.w3.org/2000/svg'
-              viewBox='0 0 189.929 189.929'
-            >
-              <path d='M70.343,70.343c-30.554,30.553-44.806,72.7-39.102,115.635l-29.738,3.951C-5.442,137.659,11.917,86.34,49.129,49.13 C86.34,11.918,137.664-5.445,189.928,1.502l-3.95,29.738C143.041,25.54,100.895,39.789,70.343,70.343z' />
-            </svg>
-          </div>
-
           <div className={s.display_div}>
-            <div className={s.screen_out}>
-              <div className={s.screen_out1}>
-                <div className={s.screen}>
-                  <div className={s.notfound_wrapper}>
-                    <span className={s.notfound_text}>
-                      {message || 'NOT FOUND'}
-                    </span>
-                  </div>
+            <div className={s.screen_out1}>
+              <div className={s.screen}>
+                <div className={s.notfound_wrapper}>
+                  <span className={s.notfound_text}>{displayMessage}</span>
                 </div>
-                <div className={s.screenM}></div>
               </div>
+              <div className={s.screenM}></div>
             </div>
           </div>
 
