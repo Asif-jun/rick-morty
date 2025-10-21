@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import s from './EpisodePage.module.css'
 import btn from '../../common/components/animatedButton/AnimatedButton.module.css'
-import { SearchBox } from '../searchBox/SearchBox'
+import { SearchBox } from '../search/SearchBox'
 import { AnimatedButton } from '../../common/components/animatedButton/AnimatedButton'
 import { NotFound } from '../../common/components/notFound/NotFound'
 import { PageTemplate } from '../../common/components/pageTemplate/PageTemplate'

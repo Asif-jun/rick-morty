@@ -1,10 +1,10 @@
 import { Route, Routes } from 'react-router'
 import { Header } from './common/components/header/Header'
-import { CharacterPage } from './pages/characterPage/CharacterPage'
-import { EpisodePage } from './pages/episodePage/EpisodePage'
-import { HomePage } from './pages/homePage/HomePage'
-import { LocationPage } from './pages/locationPage/LocationPage'
-import { Character } from './pages/characterPage/Character'
+import { CharacterPage } from './pages/character/CharacterPage'
+import { EpisodePage } from './pages/episode/EpisodePage'
+import { HomePage } from './pages/home/HomePage'
+import { LocationPage } from './pages/location/LocationPage'
+import { Character } from './pages/character/Character'
 import { NotFound } from './common/components/notFound/NotFound'
 
 function App() {

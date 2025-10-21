@@ -1,23 +1,23 @@
 import { useState } from 'react'
-import s from './LocationPage.module.css'
+import s from './CharacterPage.module.css'
 import btn from '../../common/components/animatedButton/AnimatedButton.module.css'
-import { SearchBox } from '../searchBox/SearchBox'
+import { SearchBox } from '../search/SearchBox'
 import { AnimatedButton } from '../../common/components/animatedButton/AnimatedButton'
 import { NotFound } from '../../common/components/notFound/NotFound'
 import { PageTemplate } from '../../common/components/pageTemplate/PageTemplate'
 import { Card } from '../../common/components/card/Card'
 import { useFetch } from '../../common/hooks/useFetch'
-import type { LocationResponse } from '../../types/location'
+import type { CharacterResponse } from '../../types/character'
 
-export const LocationPage = () => {
+export const CharacterPage = () => {
   const [search, setSearch] = useState('')
   const [page, setPage] = useState(1)
 
-  const { data, loading, errorType } = useFetch<LocationResponse>(
-    `https://rickandmortyapi.com/api/location?page=${page}&name=${search}`
+  const { data, loading, errorType } = useFetch<CharacterResponse>(
+    `https://rickandmortyapi.com/api/character?page=${page}&name=${search}`
   )
 
-  const locations = data?.results || []
+  const characters = data?.results || []
   const totalPages = data?.info?.pages || 1
 
   const nextPage = () => page < totalPages && setPage(prev => prev + 1)
@@ -27,8 +27,8 @@ export const LocationPage = () => {
     <PageTemplate
       searchComponent={<SearchBox value={search} onChange={setSearch} />}
       loading={loading}
-      errorType={errorType}
-      notFoundComponent={<NotFound type='location' />}
+      errorType={errorType} // 'network' | 'notFound' | null
+      notFoundComponent={<NotFound type='character' />}
       paginationComponent={
         <div className={btn.buttonContainer}>
           <AnimatedButton onClick={prevPage} disabled={page === 1}>
@@ -39,16 +39,22 @@ export const LocationPage = () => {
           </AnimatedButton>
         </div>
       }
-      cardsClassName={s.cardsContainer}
+      cardsClassName={s.cardContainer}
     >
-      {locations.map(l => (
+      {characters.map(c => (
         <Card
-          key={l.id}
-          title={l.name}
+          key={c.id}
+          title={c.name}
           details={
             <>
-              <div>Type: {l.type}</div>
-              <div>Dimension: {l.dimension}</div>
+              <img
+                src={c.image}
+                alt={c.name}
+                style={{ width: '100%', borderRadius: 5 }}
+              />
+              <div>
+                {c.status} — {c.species}
+              </div>
             </>
           }
         />

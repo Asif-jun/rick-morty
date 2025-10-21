@@ -4,84 +4,98 @@
   align-items: center;
   justify-content: center;
   width: 100%;
-  min-height: 100vh; /* растягиваем на весь экран */
+  min-height: 100vh;
   position: relative;
-  background-color: #f2f2f2; /* фон всей страницы */
+  background-color: #f2f2f2;
 }
 
-/* Главный контейнер телевизора и антенны */
 .main {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: -6rem; /* поднимаем телевизор */
+  margin-top: -6rem; /* чуть меньше отрицательного смещения */
   position: relative;
 }
 
 /* ================= АНТЕННА ================= */
 .antenna {
   position: relative;
-  width: 6rem;
-  height: 6rem;
+  width: 5rem;
+  height: 5rem;
   border-radius: 50%;
   border: 2px solid black;
   background-color: #f27405;
-  margin-bottom: -7rem; /* поднимаем ближе к телевизору */
+  margin-bottom: -6rem;
 }
 .antenna_shadow {
   position: absolute;
   background-color: transparent;
-  width: 60px;
-  height: 65px;
-  margin-left: 2rem;
+  width: 50px;
+  height: 56px;
+  margin-left: 1.68rem;
   border-radius: 45%;
   transform: rotate(140deg);
   border: 4px solid transparent;
   box-shadow: inset 0px 16px #a85103, inset 0px 16px 1px 1px #a85103;
 }
-/* маленькие детали антенны */
 .antenna::after {
   content: '';
   position: absolute;
-  margin-top: -10rem;
-  margin-left: 0.5rem;
+  margin-top: -9.4rem;
+  margin-left: 0.4rem;
   transform: rotate(-25deg);
-  width: 1.2rem;
-  height: 0.6rem;
+  width: 1rem;
+  height: 0.5rem;
   border-radius: 50%;
   background-color: #f69e50;
 }
 .antenna::before {
   content: '';
   position: absolute;
-  margin-top: 0.3rem;
-  margin-left: 1.5rem;
+  margin-top: 0.2rem;
+  margin-left: 1.25rem;
   transform: rotate(-20deg);
-  width: 1.7rem;
-  height: 0.9rem;
+  width: 1.5rem;
+  height: 0.8rem;
   border-radius: 50%;
   background-color: #f69e50;
 }
-/* элементы антенны */
-.a1,
-.a2 {
-  background-image: linear-gradient(#171717, #353535, #171717);
-  border-radius: 50px;
-  position: relative;
-}
+
+/* Антенны внутри */
 .a1 {
+  position: relative;
   top: -94%;
   left: -126%;
-  width: 14rem;
-  height: 6rem;
+  width: 12rem;
+  height: 5.5rem;
+  border-radius: 50px;
+  background-image: linear-gradient(#171717, #353535, #171717);
   transform: rotate(-29deg);
   clip-path: polygon(50% 0%, 49% 100%, 52% 100%);
 }
+.a1d,
+.a2d {
+  position: relative;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  border: 2px solid black;
+  background-color: #979797;
+  z-index: 99;
+}
+.a1d {
+  top: -206%;
+  left: -42%;
+  transform: rotate(45deg);
+}
 .a2 {
+  position: relative;
   top: -208%;
   left: -10%;
-  width: 14rem;
-  height: 5rem;
+  width: 12rem;
+  height: 4rem;
+  border-radius: 50px;
+  background-image: linear-gradient(#171717, #353535, #171717);
   clip-path: polygon(
     47% 0,
     47% 0,
@@ -94,22 +108,6 @@
   );
   transform: rotate(-8deg);
 }
-/* маленькие шарики на антенне */
-.a1d,
-.a2d {
-  position: relative;
-  width: 0.6rem;
-  height: 0.6rem;
-  border-radius: 50%;
-  border: 2px solid black;
-  background-color: #979797;
-  z-index: 99;
-}
-.a1d {
-  top: -206%;
-  left: -42%;
-  transform: rotate(45deg);
-}
 .a2d {
   top: -294%;
   left: 88%;
@@ -118,17 +116,19 @@
 /* ================= ТЕЛЕВИЗОР ================= */
 .tv {
   position: relative;
-  width: 22rem; /* ширина телевизора */
-  height: 12rem; /* высота телевизора */
-  margin-top: 4rem;
-  border-radius: 18px;
+  width: 19rem; /* увеличено */
+  height: 10rem; /* увеличено */
+  margin-top: 3rem;
+  border-radius: 15px;
   background-color: #d36604;
   display: flex;
   justify-content: center;
   align-items: center;
   border: 2px solid #1d0e01;
-  box-shadow: inset 0 0 #e69635;
+  box-shadow: inset 0rem 0rem #e69635;
 }
+
+/* Экран */
 .display_div {
   display: flex;
   align-items: center;
@@ -136,18 +136,18 @@
   border-radius: 15px;
 }
 .screen_out1 {
-  width: 14rem;
-  height: 9rem;
+  width: 12rem; /* увеличено */
+  height: 8.5rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 12px;
+  border-radius: 10px;
 }
 .screen,
 .screenM {
-  width: 17rem;
-  height: 10rem;
-  border-radius: 12px;
+  width: 15rem; /* увеличено */
+  height: 9rem; /* увеличено */
+  border-radius: 10px;
   border: 2px solid #1d0e01;
   display: flex;
   align-items: center;
@@ -184,11 +184,9 @@
 /* ================= NOT FOUND ================= */
 .notfound_wrapper {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-0%, -6%);
   background: black;
-  padding: 0.8rem 1.5rem;
+  padding: 0.5rem 1rem;
   border-radius: 5px;
   display: flex;
   align-items: center;
@@ -196,30 +194,137 @@
   cursor: pointer;
   overflow: hidden;
 }
+
+/* индивидуальное позиционирование надписей */
+.notfound_character {
+  top: 50%;
+  left: 50%;
+}
+.notfound_location {
+  top: 52%;
+  left: 50%;
+}
+.notfound_episode {
+  top: 48%;
+  left: 50%;
+}
+.notfound_network {
+  top: 50%;
+  left: 52%;
+}
+
 .notfound_text {
   font-weight: bold;
-  font-size: 1.25rem; /* размер текста */
+  font-size: 1rem;
   color: white;
   position: relative;
   z-index: 1;
   text-shadow: 2px 2px 0 #00e572, -2px -2px 0 #8b00ff;
 }
-/* Глитч-анимация */
+
+/* псевдоэлементы без анимации по умолчанию */
 .notfound_text::before,
 .notfound_text::after {
-  content: attr(data-text); /* теперь повторяет фактический текст */
   position: absolute;
   top: 0;
   left: 0;
   opacity: 0.8;
   pointer-events: none;
-  text-shadow: inherit;
+  text-shadow: inherit; /* берём цветовые тени из родителя */
+  transform: translate(0, 0);
 }
-.notfound_wrapper:hover .notfound_text::before,
+.notfound_text::before {
+  text-shadow: 2px 2px 0 #00e572, -2px -2px 0 #8b00ff;
+}
+.notfound_text::after {
+  text-shadow: -2px -2px 0 #ff3366, 2px 2px 0 #00ccff;
+  clip-path: polygon(0 60%, 100% 60%, 100% 100%, 0 100%);
+}
+
+/* глитч-анимация включаем только при ховере родителя */
+.notfound_wrapper:hover .notfound_text::before {
+  animation: glitchAnim 2.5s infinite linear alternate;
+}
+
 .notfound_wrapper:hover .notfound_text::after {
   animation: glitchAnim 2.5s infinite linear alternate;
   animation-delay: 0.5s;
 }
+
+/* ================= Кнопки ================= */
+.buttons_div {
+  width: 4.25rem;
+  height: 8rem;
+  background-color: #e69635;
+  border: 2px solid #1d0e01;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  row-gap: 0.75rem;
+  border-radius: 10px;
+}
+.b1,
+.b2 {
+  width: 1.65rem;
+  height: 1.65rem;
+  border-radius: 50%;
+  background-color: #7f5934;
+  border: 2px solid black;
+}
+.b1 div {
+  width: 2.15px;
+  height: 28px;
+  background-color: #000;
+  position: absolute;
+  transform: rotate(45deg);
+  margin-top: -0.4px;
+  margin-left: 12px;
+}
+
+/* Динамика колонок */
+.speakers {
+  display: flex;
+  flex-direction: column;
+  row-gap: 0.5rem;
+}
+.g1 {
+  display: flex;
+  column-gap: 0.25rem;
+}
+.g11,
+.g12,
+.g13 {
+  width: 0.65rem;
+  height: 0.65rem;
+  border-radius: 50%;
+  background-color: #7f5934;
+  border: 2px solid black;
+}
+
+/* Линии */
+.lines {
+  display: flex;
+  column-gap: 0.1rem;
+  align-self: flex-end;
+}
+.line1,
+.line3 {
+  width: 2px;
+  height: 0.5em;
+  background-color: black;
+  border-radius: 25px 25px 0 0;
+  margin-top: 0.5em;
+}
+.line2 {
+  width: 2px;
+  height: 1em;
+  background-color: black;
+  border-radius: 25px 25px 0 0;
+  flex-grow: 1;
+}
+
+/* ================= АНИМАЦИИ ================= */
 @keyframes glitchAnim {
   0% {
     transform: translate(0);
@@ -244,77 +349,6 @@
   100% {
     background-position: 50% 0, 60% 50%;
   }
-}
-
-/* ================= КНОПКИ ================= */
-.buttons_div {
-  width: 5rem;
-  height: 10rem;
-  background-color: #e69635;
-  border: 2px solid #1d0e01;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  row-gap: 0.75rem;
-  border-radius: 10px;
-}
-.b1,
-.b2 {
-  width: 2rem;
-  height: 2rem;
-  border-radius: 50%;
-  background-color: #7f5934;
-  border: 2px solid black;
-}
-.b1 div {
-  width: 2.15px;
-  height: 28px;
-  background-color: #000;
-  position: absolute;
-  transform: rotate(45deg);
-  margin-top: -0.4px;
-  margin-left: 12px;
-}
-.speakers {
-  display: flex;
-  flex-direction: column;
-  row-gap: 0.5rem;
-}
-.g1 {
-  display: flex;
-  column-gap: 0.25rem;
-}
-.g11,
-.g12,
-.g13 {
-  width: 0.8rem;
-  height: 0.8rem;
-  border-radius: 50%;
-  background-color: #7f5934;
-  border: 2px solid black;
-}
-
-/* ================= ЛИНИИ ================= */
-.lines {
-  display: flex;
-  column-gap: 0.1rem;
-  align-self: flex-end;
-}
-.line1,
-.line3 {
-  width: 2px;
-  height: 0.5em;
-  background-color: black;
-  border-radius: 25px 25px 0 0;
-  margin-top: 0.5em;
-}
-.line2 {
-  width: 2px;
-  height: 1em;
-  background-color: black;
-  border-radius: 25px 25px 0 0;
-  flex-grow: 1;
 }
 
 /* ================= АДАПТИВ ================= */
